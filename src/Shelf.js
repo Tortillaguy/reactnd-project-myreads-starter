@@ -2,16 +2,28 @@ import React, {Component} from 'react'
 import Book from './Book'
 
 class Shelf extends Component {
-	
+
+	onShelfChange(book){
+		console.log(book);
+	}
+
+	updateShelf = (shelf, id)=>{
+		console.log("Shelf Component called")
+		this.props.updateBook(shelf, id);
+	}
+
 	render() { 
 		return (
 			<div className="bookshelf">
 			<h2 className="bookshelf-title">{this.props.title}</h2>
 				<div className="bookshelf-books">
 					<ol className="books-grid">
-					{this.props.books.map((book)=>(
+					{this.props.books.filter((book)=>(book.shelf === this.props.shelf)).map((book)=>(
 						<li key={book.id}>
-							<Book title={book.title} author={book.authors[0]} coverURL={book.imageLinks.thumbnail}/>
+							<Book 
+								book={book}
+								onChangeShelf={this.updateShelf}
+							/>
 						</li>
 						))}
 					</ol>
