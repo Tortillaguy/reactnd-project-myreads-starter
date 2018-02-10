@@ -10,9 +10,9 @@ class Book extends Component {
 	}
 
 	changeShelf = (event) => {
-		console.log("Book Component called")
 		let shelf = event.target.value
-		this.props.onChangeShelf(shelf, this.props.book.id)
+		if(shelf !== "none")
+			this.props.onChangeShelf(shelf, this.props.book.id)
 	}
 
 	render() {
@@ -21,7 +21,7 @@ class Book extends Component {
 	          <div className="book-top">
 	            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.book.imageLinks.thumbnail})` }}></div>
 	            <div className="book-shelf-changer">
-	              <select value="none" onChange={this.changeShelf}>
+	              <select value={this.props.shelf} onChange={this.changeShelf}>
 	                <option value="none" disabled>Move to...</option>
 	                <option value="currentlyReading">Currently Reading</option>
 	                <option value="wantToRead">Want to Read</option>
@@ -34,7 +34,7 @@ class Book extends Component {
 	          <div className="book-authors">{this.props.book.authors[0]}</div>
 	        </div>
         )
-	} 
+	}
 }
 
 export default Book
