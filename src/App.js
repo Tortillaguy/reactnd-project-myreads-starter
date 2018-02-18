@@ -19,15 +19,25 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount(){
-    BooksAPI.getAll().then(books=>this.setState({books:books}))
+    BooksAPI.getAll().then(books=>this.setState({books:books}));
+
   }
 
-  update = (shelf, id) =>{
+  update = (shelf, book) =>{
     console.log("App Component called")
-    var books = this.state.books
-    let index = books.findIndex((book)=>book.id === id)
-    books[index].shelf = shelf
-    this.setState({books:books})
+    // var books = this.state.books
+    // let index = books.findIndex((book)=>book.id === id)
+    // books[index].shelf = shelf
+    // this.setState({books:books})
+    BooksAPI.update(book, shelf).then(
+      BooksAPI.get(book.id).then( updatedBook =>{
+        var collection = this.state.books;
+        let index = collection.findIndex(item=>item.id === updatedBook.id);
+        collection[index] = updatedBook;
+        this.setState({books:collection});
+      })
+        
+      );
   }
 
   render() {

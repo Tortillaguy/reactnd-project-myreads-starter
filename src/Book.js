@@ -11,8 +11,9 @@ class Book extends Component {
 
 	changeShelf = (event) => {
 		let shelf = event.target.value
+		console.log('received value');
 		if(shelf !== "none")
-			this.props.onChangeShelf(shelf, this.props.book.id)
+			this.props.onChangeShelf(shelf, this.props.book)
 	}
 
 	render() {
@@ -21,7 +22,7 @@ class Book extends Component {
 	          <div className="book-top">
 	            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.book.imageLinks.thumbnail})` }}></div>
 	            <div className="book-shelf-changer">
-	              <select value={this.props.shelf} onChange={this.changeShelf}>
+	              <select value={this.props.book.shelf} onChange={this.changeShelf}>
 	                <option value="none" disabled>Move to...</option>
 	                <option value="currentlyReading">Currently Reading</option>
 	                <option value="wantToRead">Want to Read</option>
