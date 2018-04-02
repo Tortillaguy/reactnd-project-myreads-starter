@@ -8,43 +8,50 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
+    
     books: [],
-    showSearchPage: false
   }
 
   componentDidMount(){
     BooksAPI.getAll().then(books=>this.setState({books:books}));
-
   }
 
   update = (shelf, book) =>{
-    console.log("App Component called")
-    // var books = this.state.books
-    // let index = books.findIndex((book)=>book.id === id)
-    // books[index].shelf = shelf
-    // this.setState({books:books})
-    BooksAPI.update(book, shelf).then(
+    
+    BooksAPI.update(book, shelf).then( response => {
+      //Why does BooksAPI return shelf arrays when GetAll returns a list of books? Two different hierarchies for data model
+      //use Get on original book object
       BooksAPI.get(book.id).then( updatedBook =>{
-        var collection = this.state.books;
-        let index = collection.findIndex(item=>item.id === updatedBook.id);
-        collection[index] = updatedBook;
-        this.setState({books:collection});
-      })
-        
-      );
+       // console.log(updatedBook);
+        var myCollection = this.state.books;
+        if (updatedBook.shelf === "none"){
+          var filter = myCollection.filter((myBook)=>myBook.id !== updatedBook.id);
+          this.setState({books: filter});
+          return;
+        }
+        else {
+        let index = myCollection.findIndex(item=>item.id === updatedBook.id);
+        if (index !== -1){
+           myCollection[index] = updatedBook;
+          this.setState({books:myCollection});
+        }
+        else {
+          myCollection.push(updatedBook);
+        }
+       
+        }
+        this.setState({books:myCollection});
+      });
+
+      this.forceUpdate();
+    });
+      
   }
 
   render() {
     return (
       <div className="app">
-        <Route path="/search" component={SearchBar} />
-
+        <Route path="/search" render={()=>(<SearchBar update={this.update} books={this.state.books} />)}/>
         <Route exact path="/" render={()=> (
           <div className="list-books">
             <div className="list-books-title"><h1>MyReads</h1></div>

@@ -8,7 +8,7 @@ class Shelf extends Component {
 	}
 
 	updateShelf = (shelf, book)=>{
-		console.log("Shelf Component called")
+		//console.log("Shelf Component called")
 		this.props.updateBook(shelf, book);
 	}
 
