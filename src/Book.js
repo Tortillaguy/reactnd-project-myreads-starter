@@ -16,7 +16,7 @@ class Book extends Component {
 			}
 		}
 		else {
-			this.setState({shelf: this.props.shelf});
+			this.setState({shelf: this.props.book.shelf});
 		}
 	}
 
@@ -26,13 +26,13 @@ class Book extends Component {
 
 	changeShelf = (event) => {
 		let shelf = event.target.value
-		
+
 		this.setState({shelf: shelf});
 		this.props.onChangeShelf(shelf, this.props.book)
 	}
 
 	checkShelf = (shelf) =>{
-		 if (this.state.shelf === shelf){
+		 if (this.state.shelf === shelf || (shelf === "none" && this.state.shelf === "")){
 			return "\u2714";
 		}
 	}

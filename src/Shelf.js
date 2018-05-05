@@ -12,7 +12,7 @@ class Shelf extends Component {
 		this.props.updateBook(shelf, book);
 	}
 
-	render() { 
+	render() {
 		return (
 			<div className="bookshelf">
 			<h2 className="bookshelf-title">{this.props.title}</h2>
@@ -20,7 +20,7 @@ class Shelf extends Component {
 					<ol className="books-grid">
 					{this.props.books.filter((book)=>(book.shelf === this.props.shelf)).map((book)=>(
 						<li key={book.id}>
-							<Book 
+							<Book
 								book={book}
 								onChangeShelf={this.updateShelf}
 							/>
@@ -29,7 +29,7 @@ class Shelf extends Component {
 					</ol>
 				</div>
 			</div>
-		)	
+		)
 	}
 }
 

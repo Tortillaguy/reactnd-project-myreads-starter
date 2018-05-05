@@ -7,14 +7,14 @@ import './App.css'
 class SearchBar extends Component{
 	state = {
     query: '',
-    results: [], 
+    results: [],
     books: [],
 	}
 
   componentDidMount(){
     if (this.props.books){
       if (this.props.books.length === 0){
-        //BooksAPI.getAll().then(all=>console.log(all));
+        BooksAPI.getAll().then(all=>console.log(all));
         BooksAPI.getAll().then(all=>{this.setState({books: all})});
       }
       else {
@@ -34,7 +34,7 @@ class SearchBar extends Component{
       //console.log(results);
       if (results.length > 0)
         this.setState({results:results});
-      else 
+      else
         this.setState({results:[]});
     })
   }
@@ -57,9 +57,9 @@ class SearchBar extends Component{
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <input type="text" 
+                <input type="text"
                   value={this.state.query}
-                  onChange={(event)=>this.updateQuery(event.target.value)} 
+                  onChange={(event)=>this.updateQuery(event.target.value)}
                   placeholder="Search by title or author"/>
               </div>
             </div>
